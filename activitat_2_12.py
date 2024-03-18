@@ -20,6 +20,20 @@ min = conterror()
 print(green + f"Valor maximo")
 max = conterror()
 
-tab = [0,0,0,0]
-        [0,0,0,0]
+taula = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 
+fila=0
+
+while fila < 4:
+    columna=0
+    while columna < 4:
+        caracter = random.randint(min, max)
+        taula[fila][columna]=caracter
+        columna+=1
+    fila+=1
+
+fila=0
+print(magenta + f"\nTabla:")
+while fila < 4:
+    print(f"{taula[fila]}")
+    fila+=1
