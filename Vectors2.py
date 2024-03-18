@@ -18,4 +18,3 @@ fila=0
 while fila < 3:
     print(taula[fila])
     fila+=1
-
