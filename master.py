@@ -54,6 +54,8 @@ personas = jugadores()
 print(magenta + f"{personas} jugadores seleccionado")
 
 dificultad = dif()
+
+
 if dificultad == 1:
     print(green + "Has seleccionado la dificutlad:\n"
                   ".----.  .--.   .----..-.  .-.\n"
@@ -76,40 +78,24 @@ if dificultad == 3:
                 "`-' `-'`-'  `-'`-'-' `----' \n"
                 "Tienes 6 intentos para descubrir la convinación.")
 
-def conterror():
-    control = True
-    while control == True:
-        try:
-            val = int(input(green + "Introduce un valor: "))
-            control = False
-            return val
-        except ValueError:
-            print(red + "El valor ha de ser un numero entero")
+def jugador1():
+    #Variable de tabla
+    taula = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 
-#Especificar valor minimo
-print(green + f"Valor minimo")
-min = conterror()
+    #Inicializo fila
+    fila = 0
+    #While para rellenar la tabla
+    while fila < 4:
+        columna=0
+        while columna < 4:
+            #randint entre las 2 variables
+            caracter = random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+            taula[fila][columna]=caracter
+            columna+=1
+        fila+=1
+    fila=0
+    while fila < 1:
+        print(magenta + f"{taula[fila]}")
+        fila+=1
 
-#Especificar valor maximo
-print(green + f"Valor maximo")
-max = conterror()
-
-#Variable de tabla (En linea porque soy un psicopata)
-taula = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-
-#Inicializo fila
-fila = 0
-#While para rellenar la tabla
-while fila < 4:
-    columna=0
-    while columna < 4:
-        #randint entre las 2 variables
-        caracter = random.randint(min, max)
-        taula[fila][columna]=caracter
-        columna+=1
-    fila+=1
-fila=0
-print(magenta + f"\nTabla:")
-while fila < 4:
-    print(f"{taula[fila]}")
-    fila+=1
+game = jugador1()
