@@ -1,5 +1,6 @@
 #Importamos la libreria random
 import  random
+import  getpass
 
 #Colores
 green = "\033[0;92m"
@@ -26,6 +27,7 @@ def jugadores():
             if (jugadores == 1 or jugadores == 2):
                 control = False
                 return jugadores
+
             else:
                 print(red + "Elije entre 1 o 2 jugadores.")
         except ValueError:
@@ -50,30 +52,59 @@ def dif():
         except ValueError:
             print(red + "El valor ha de ser 1, 2 o 3.")
 
-def jugador1():
-    #Variable de tabla
-    taula = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+#AAAA
+def generar_combinacion():
+    letras_posibles = ['A', 'B', 'C', 'D', 'E', 'F']
+    combinacion = []
+    for _ in range(4):
+        letra = random.choice(letras_posibles)
+        combinacion.append(letra)
+    print(f"{combinacion}")
+    return combinacion
+def jugar_mastermind(difi):
+    intcorrecto = False
+    print("¡Bienvenido a Mastermind!\n")
+    if jugadores() == 1:
+        combinacion_secreta = generar_combinacion()
+    else:
+        combinacion_secreta = input("Introduce la combinación entre A y F: ")
 
-    #Inicializo fila
-    fila = 0
-    #While para rellenar la tabla
-    while fila < 4:
-        columna=0
-        while columna < 4:
-            #randint entre las 2 variables
-            caracter = random.choice("ABCDEF")
-            taula[fila][columna]=caracter
-            columna+=1
-        fila+=1
-    fila=0
-    while fila < 1:
-        print(magenta + f"{taula[fila]}")
-        fila+=1
-    return taula
+    for intento_actual in range(1, difi):
+        print(f"Intento {intento_actual}")
+        intento = obtener_intentos()
+        colocacion_correcta, color_correcto = verificar_combinacion(combinacion_secreta, intento)
+        imprimir_resultado(colocacion_correcta, color_correcto)
+
+        if colocacion_correcta == 4:
+            print("Combinación correcta")
+            return
+        print("¡Se te acabaron los intentos! La combinación secreta era:", ''.join(combinacion_secreta))
+
+def imprimir_resultado(colocacion_correcta, color_correcto):
+    resultado = 'X' * colocacion_correcta + '.' * color_correcto
+    print(f"Resultado: {resultado}")
+
+def verificar_combinacion(combinacion_secreta, intento):
+    colocacion_correcta = 0
+    color_correcto = 0
+    for i in range(4):
+        if intento[i] == combinacion_secreta[i]:
+            colocacion_correcta += 1
+        elif intento[i] in combinacion_secreta:
+            color_correcto += 1
+    return colocacion_correcta, color_correcto
+
+def obtener_intentos():
+    print(f"Intenta adivinar la combinación de las letras A, B, C, D, E, F: ")
+    while True:
+        intento = input().upper()
+        if len(intento) != 4 or not all(letra in 'ABCDEF' for letra in intento):
+            print("Por favor, ingresa una combinación válida de 4 letras de A a F.")
+        else:
+            return list(intento)
+#AAA
 
 
-personas = jugadores()
-print(magenta + f"{personas} jugadores seleccionado")
 dificultad = dif()
 
 
@@ -84,6 +115,7 @@ if dificultad == 1:
                   "} '__}/  /\  \.-._} }  `-\ }\n"
                   "`----'`-'  `-'`----'     `-'\n"
                   "Tienes 20 intentos para descubrir la convinación.")
+    difi = 20
 if dificultad == 2:
     print(magenta + "Has seleccionado la dificultad:\n"
                     ".-. .-. .---. .---. .-.  .-.  .--.  .-.   \n"
@@ -91,15 +123,15 @@ if dificultad == 2:
                     "| }\  {\ '-} /| } \ | {  } |/  /\  \} '--.\n"
                     "`-' `-' `---' `-'-' `-'  `-'`-'  `-'`----'\n"
                     "Tienes 12 intentos para descubrir la convinación.")
+    difi = 12
 if dificultad == 3:
     print(red + "Has seleccionado la dificultad:\n"
                 ".-. .-.  .--.  .---. .----.\n"
                 "{ {_} | / {} \ } }}_}} {-. \ \n"
                 "| { } }/  /\  \| } \ } '-} / \n"
                 "`-' `-'`-'  `-'`-'-' `----' \n"
-                "Tienes 6 intentos para descubrir la convinación.")
+                "Tienes 10 intentos para descubrir la convinación.")
+    difi = 10
 
 
-
-game = jugador1()
-tab = jugador1(taula)
+difi = jugar_mastermind(difi)
