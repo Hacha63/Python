@@ -1,6 +1,6 @@
 #Importamos la libreria random
 import  random
-import  getpass
+
 
 #Colores
 green = "\033[0;92m"
