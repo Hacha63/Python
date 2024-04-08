@@ -59,7 +59,7 @@ def generar_combinacion():
     for _ in range(4):
         letra = random.choice(letras_posibles)
         combinacion.append(letra)
-    print(f"{combinacion}")
+
     return combinacion
 def jugar_mastermind(difi):
     intcorrecto = False
@@ -78,7 +78,7 @@ def jugar_mastermind(difi):
         if colocacion_correcta == 4:
             print(magenta+ "Combinación correcta")
             return
-        print(red + "¡Se te acabaron los intentos! La combinación secreta era:", ''.join(combinacion_secreta))
+    print(red + "¡Se te acabaron los intentos! La combinación secreta era:", ''.join(combinacion_secreta))
 
 def imprimir_resultado(colocacion_correcta, color_correcto):
     resultado = 'X' * colocacion_correcta + '.' * color_correcto
@@ -139,8 +139,8 @@ if dificultad == 3:
                 "{ {_} | / {} \ } }}_}} {-. \ \n"
                 "| { } }/  /\  \| } \ } '-} / \n"
                 "`-' `-'`-'  `-'`-'-' `----' \n"
-                "Tienes 10 intentos para descubrir la convinación.")
-    difi = 10
+                "Tienes 7 intentos para descubrir la convinación.")
+    difi = 7
 
 #Juego
 difi = jugar_mastermind(difi)
