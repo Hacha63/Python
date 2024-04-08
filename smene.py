@@ -63,26 +63,26 @@ def generar_combinacion():
     return combinacion
 def jugar_mastermind(difi):
     intcorrecto = False
-    print("¡Bienvenido a Mastermind!\n")
+    print(magenta + "¡Bienvenido a Mastermind!\n")
     if jugadores() == 1:
         combinacion_secreta = generar_combinacion()
     else:
-        combinacion_secreta = input("Introduce la combinación entre A y F: ")
+        combinacion_secreta = jugador2()
 
     for intento_actual in range(1, difi):
-        print(f"Intento {intento_actual}")
+        print(magenta + f"Intento {intento_actual}")
         intento = obtener_intentos()
         colocacion_correcta, color_correcto = verificar_combinacion(combinacion_secreta, intento)
         imprimir_resultado(colocacion_correcta, color_correcto)
 
         if colocacion_correcta == 4:
-            print("Combinación correcta")
+            print(magenta+ "Combinación correcta")
             return
-        print("¡Se te acabaron los intentos! La combinación secreta era:", ''.join(combinacion_secreta))
+        print(red + "¡Se te acabaron los intentos! La combinación secreta era:", ''.join(combinacion_secreta))
 
 def imprimir_resultado(colocacion_correcta, color_correcto):
     resultado = 'X' * colocacion_correcta + '.' * color_correcto
-    print(f"Resultado: {resultado}")
+    print(green + f"Resultado: {resultado}")
 
 def verificar_combinacion(combinacion_secreta, intento):
     colocacion_correcta = 0
@@ -95,16 +95,25 @@ def verificar_combinacion(combinacion_secreta, intento):
     return colocacion_correcta, color_correcto
 
 def obtener_intentos():
-    print(f"Intenta adivinar la combinación de las letras A, B, C, D, E, F: ")
+    print(green + f"Intenta adivinar la combinación de las letras A, B, C, D, E, F: ")
     while True:
         intento = input().upper()
         if len(intento) != 4 or not all(letra in 'ABCDEF' for letra in intento):
-            print("Por favor, ingresa una combinación válida de 4 letras de A a F.")
+            print(red + "Por favor, ingresa una combinación válida de 4 letras de A a F.")
         else:
             return list(intento)
+
+def jugador2():
+    print(magenta + "Introduce la combinación secreta de 4 letras de la A a F: ")
+    while True:
+        combinacion = input().upper()
+        if len(combinacion) != 4 or not all(letra in 'ABCDEF' for letra in combinacion):
+            print(red + "Por favor, ingresa una combinación válida de 4 letras de A a F.")
+        else:
+            return list(combinacion)
 #AAA
 
-
+#Dificultad
 dificultad = dif()
 
 
@@ -133,5 +142,5 @@ if dificultad == 3:
                 "Tienes 10 intentos para descubrir la convinación.")
     difi = 10
 
-
+#Juego
 difi = jugar_mastermind(difi)
