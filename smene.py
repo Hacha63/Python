@@ -7,13 +7,15 @@ green = "\033[0;92m"
 magenta = "\033[0;95m"
 red = "\033[0;91m"
 
-
+#Introduccion
 print(magenta + "    __  ___           __                      _           __\n"
                 "   /  |/  /___ ______/ /____  _________ ___  (_)___  ____/ /\n"
                 "  / /|_/ / __ `/ ___/ __/ _ \/ ___/ __ `__ \/ / __ \/ __  /\n"
                 " / /  / / /_/ (__  ) /_/  __/ /  / / / / / / / / / / /_/ /\n"
                 "/_/  /_/\__,_/____/\__/\___/_/  /_/ /_/ /_/_/_/ /_/\__,_/\n")
-
+print(magenta + "@ Significa que hay un numero correcto en una posición correcta.\n"
+                "& Significa que hay un numero correcto pero en una posición erronea.")
+#Def con control de errores para elejir si hay 1 o 2 jugadores.
 def jugadores():
     control = True
     print(magenta + "    o     |    o   o \n"
@@ -33,7 +35,7 @@ def jugadores():
         except ValueError:
             print(red + "El valor ha de ser o 1 o 2.")
 
-
+#Def para elejir la dificultad con control de errores
 def dif():
     control = True
     print(green + ".----.  .--.   .----..-.  .-.    .-. .-. .---. .---. .-.  .-.  .--.  .-.       .-. .-.  .--.  .---. .----.\n"
@@ -52,7 +54,7 @@ def dif():
         except ValueError:
             print(red + "El valor ha de ser 1, 2 o 3.")
 
-#AAAA
+#Def para generar la combinacion secreta. Elije entre las letras de la tabla
 def generar_combinacion():
     letras_posibles = ['A', 'B', 'C', 'D', 'E', 'F']
     combinacion = []
@@ -61,86 +63,108 @@ def generar_combinacion():
         combinacion.append(letra)
 
     return combinacion
+#Def con el juego como alm (difi) porque se usa la variable dificultad para que cada dificutlad tena sus intentos
 def jugar_mastermind(difi):
-    intcorrecto = False
+    quedan = difi
     print(magenta + "¡Bienvenido a Mastermind!\n")
+    #Llama el def para elejir los jugadores y compara el resultado, si la eleccion no es 1, (2) nos lleva a otro def donde la combinación se elije
     if jugadores() == 1:
         combinacion_secreta = generar_combinacion()
     else:
         combinacion_secreta = jugador2()
-
+    #Los intentos tienen el rango entre 1 y la dificultad ya sean 7, 12 o 20 intentos.
     for intento_actual in range(1, difi):
+        quedan = quedan - 1
         print(magenta + f"Intento {intento_actual}")
+        print(magenta + f"Quedan {quedan} intentos")
         intento = obtener_intentos()
-        colocacion_correcta, color_correcto = verificar_combinacion(combinacion_secreta, intento)
-        imprimir_resultado(colocacion_correcta, color_correcto)
-
+        #Variables de siguientes def para comparar la combinacion
+        colocacion_correcta, letra_correcta = verificar_combinacion(combinacion_secreta, intento)
+        imprimir_resultado(colocacion_correcta, letra_correcta)
+        #Si la variable colocacion_correcta tiene las 4 letras correctas ganas
         if colocacion_correcta == 4:
-            print(magenta+ "Combinación correcta")
+            print(magenta+ " __      __  _____    _____   _______    ____    _____    _____            \n"
+                           " \ \    / / |_   _|  / ____| |__   __|  / __ \  |  __ \  |_   _|     /\    \n"
+                           "  \ \  / /    | |   | |         | |    | |  | | | |__) |   | |      /  \   \n"
+                           "   \ \/ /     | |   | |         | |    | |  | | |  _  /    | |     / /\ \  \n"
+                           "    \  /     _| |_  | |____     | |    | |__| | | | \ \   _| |_   / ____ \ \n"
+                           "     \/     |_____|  \_____|    |_|     \____/  |_|  \_\ |_____| /_/    \_\  ")
             return
-    print(red + "¡Se te acabaron los intentos! La combinación secreta era:", ''.join(combinacion_secreta))
-
-def imprimir_resultado(colocacion_correcta, color_correcto):
-    resultado = 'X' * colocacion_correcta + '.' * color_correcto
+    print(red + "  _____    ______   _____    _____     ____    _______            \n"
+                " |  __ \  |  ____| |  __ \  |  __ \   / __ \  |__   __|     /\    \n"
+                " | |  | | | |__    | |__) | | |__) | | |  | |    | |       /  \   \n"
+                " | |  | | |  __|   |  _  /  |  _  /  | |  | |    | |      / /\ \  \n"
+                " | |__| | | |____  | | \ \  | | \ \  | |__| |    | |     / ____ \ \n"
+                " |_____/  |______| |_|  \_\ |_|  \_\  \____/     |_|    /_/    \_\ ")
+    print(red + f"La combinachión era {combinacion_secreta}")
+#Def para imprimir resulados si son correctos o no usa & o @
+def imprimir_resultado(colocacion_correcta, letra_correcta):
+    resultado = "@" * colocacion_correcta + "&" * letra_correcta
     print(green + f"Resultado: {resultado}")
-
+#Compara la combinacion del intento que hemos introducido con la combinación que ha generado de la tabla en el def anterior
 def verificar_combinacion(combinacion_secreta, intento):
     colocacion_correcta = 0
-    color_correcto = 0
+    letra_correcta = 0
+    #Depenjdiendo si és correcto se suman las variables y el def imprimir resultados muestra
     for i in range(4):
         if intento[i] == combinacion_secreta[i]:
             colocacion_correcta += 1
         elif intento[i] in combinacion_secreta:
-            color_correcto += 1
-    return colocacion_correcta, color_correcto
-
+            letra_correcta += 1
+    return colocacion_correcta, letra_correcta
+#Este def es para introducir los intentos para adivinadlo. Tiene control de errores y aunque lo introduzcas en minuscula la funcion .upper() las traduce automaticamente.
 def obtener_intentos():
     print(green + f"Intenta adivinar la combinación de las letras A, B, C, D, E, F: ")
     while True:
         intento = input().upper()
+        #Control de errores
         if len(intento) != 4 or not all(letra in 'ABCDEF' for letra in intento):
             print(red + "Por favor, ingresa una combinación válida de 4 letras de A a F.")
         else:
+            #Devolvemos el input como lista para compararlo después
             return list(intento)
-
+#Este def es para cuando se selecciona 2 jugadores. La combinacion secreta no se genera. Se introduce por el segundo jugador.
+#Esto hay que mejorarlo porque el input es visible
 def jugador2():
     print(magenta + "Introduce la combinación secreta de 4 letras de la A a F: ")
+    #Control de errores
     while True:
         combinacion = input().upper()
         if len(combinacion) != 4 or not all(letra in 'ABCDEF' for letra in combinacion):
             print(red + "Por favor, ingresa una combinación válida de 4 letras de A a F.")
         else:
             return list(combinacion)
-#AAA
 
-#Dificultad
+
+#Llama al def para seleccionar la dificultad
 dificultad = dif()
 
-
+#If que comparan si la dificultad es 1, 2 o 3 para definir los intentos maximos en difi
+#Tambien muestra que dificultad has introducido
 if dificultad == 1:
     print(green + "Has seleccionado la dificutlad:\n"
-                  ".----.  .--.   .----..-.  .-.\n"
+                  ".----.  .--.   .----..-.  .-. \n"
                   "} |__} / {} \ { {__-` \ \/ / \n"
-                  "} '__}/  /\  \.-._} }  `-\ }\n"
-                  "`----'`-'  `-'`----'     `-'\n"
+                  "} '__}/  /\  \.-._} }  `-\ } \n"
+                  "`----'`-'  `-'`----'     `-' \n"
                   "Tienes 20 intentos para descubrir la convinación.")
     difi = 20
 if dificultad == 2:
     print(magenta + "Has seleccionado la dificultad:\n"
                     ".-. .-. .---. .---. .-.  .-.  .--.  .-.   \n"
                     "|  \{ |/ {-. \} }}_}}  \/  { / {} \ } |   \n"
-                    "| }\  {\ '-} /| } \ | {  } |/  /\  \} '--.\n"
-                    "`-' `-' `---' `-'-' `-'  `-'`-'  `-'`----'\n"
+                    "| }\  {\ '-} /| } \ | {  } |/  /\  \} '--. \n"
+                    "`-' `-' `---' `-'-' `-'  `-'`-'  `-'`----' \n"
                     "Tienes 12 intentos para descubrir la convinación.")
     difi = 12
 if dificultad == 3:
     print(red + "Has seleccionado la dificultad:\n"
-                ".-. .-.  .--.  .---. .----.\n"
+                ".-. .-.  .--.  .---. .----. \n"
                 "{ {_} | / {} \ } }}_}} {-. \ \n"
                 "| { } }/  /\  \| } \ } '-} / \n"
                 "`-' `-'`-'  `-'`-'-' `----' \n"
                 "Tienes 7 intentos para descubrir la convinación.")
     difi = 7
 
-#Juego
+#Llamamos al def principal para empezar a jugar y a la variable difi le asignamos difi para el numero de intentos segun la dificultad
 difi = jugar_mastermind(difi)
