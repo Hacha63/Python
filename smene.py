@@ -1,5 +1,6 @@
 #Importamos la libreria random
 import  random
+from getpass import getpass
 
 
 #Colores
@@ -10,18 +11,18 @@ red = "\033[0;91m"
 #Introduccion
 print(magenta + "    __  ___           __                      _           __\n"
                 "   /  |/  /___ ______/ /____  _________ ___  (_)___  ____/ /\n"
-                "  / /|_/ / __ `/ ___/ __/ _ \/ ___/ __ `__ \/ / __ \/ __  /\n"
+                r"  / /|_/ / __ `/ ___/ __/ _ \/ ___/ __ `__ \/ / __ \/ __  /""\n"
                 " / /  / / /_/ (__  ) /_/  __/ /  / / / / / / / / / / /_/ /\n"
-                "/_/  /_/\__,_/____/\__/\___/_/  /_/ /_/ /_/_/_/ /_/\__,_/\n")
+                r"/_/  /_/\__,_/____/\__/\___/_/  /_/ /_/ /_/_/_/ /_/\__,_/""\n")
 print(magenta + "@ Significa que hay un numero correcto en una posición correcta.\n"
                 "& Significa que hay un numero correcto pero en una posición erronea.")
 #Def con control de errores para elejir si hay 1 o 2 jugadores.
 def jugadores():
     control = True
-    print(magenta + "    o     |    o   o \n"
-                    "   /|\    |   /|\ /|\ \n"
-                    "   / \    |   / \ / \ \n"
-                    "    1     |      2   \n")
+    print(magenta +  "    o     |    o   o \n"
+                    r"   /|\    |   /|\ /|\ ""\n"
+                    r"   / \    |   / \ / \ ""\n"
+                    r"    1     |      2   ""\n")
 
     while control == True:
         try:
@@ -38,11 +39,11 @@ def jugadores():
 #Def para elejir la dificultad con control de errores
 def dif():
     control = True
-    print(green + ".----.  .--.   .----..-.  .-.    .-. .-. .---. .---. .-.  .-.  .--.  .-.       .-. .-.  .--.  .---. .----.\n"
-                  "} |__} / {} \ { {__-` \ \/ /     |  \{ |/ {-. \} }}_}}  \/  { / {} \ } |       { {_} | / {} \ } }}_}} {-. \ \n"
-                  "} '__}/  /\  \.-._} }  `-\ }     | }\  {\ '-} /| } \ | {  } |/  /\  \} '--.    | { } }/  /\  \| } \ } '-} / \n"
-                  "`----'`-'  `-'`----'     `-'     `-' `-' `---' `-'-' `-'  `-'`-'  `-'`----'    `-' `-'`-'  `-'`-'-' `----' \n"
-                  "             1.                                      2.                                     3.\n")
+    print(green +  ".----.  .--.   .----..-.  .-.    .-. .-. .---. .---. .-.  .-.  .--.  .-.       .-. .-.  .--.  .---. .----.\n"
+                  r"} |__} / {} \ { {__-` \ \/ /     |  \{ |/ {-. \} }}_}}  \/  { / {} \ } |       { {_} | / {} \ } }}_}} {-. \ ""\n"
+                  r"} '__}/  /\  \.-._} } `-\ }     | }\  {\ '-} /| } \ | {  } |/  /\  \} '--.    | { } }/  /\  \| } \ } '-} / ""\n"
+                   "`----'`-'  `-'`----'    `-'     `-' `-' `---' `-'-' `-'  `-'`-'  `-'`----'    `-' `-'`-'  `-'`-'-' `----' \n"
+                   "             1.                                      2.                                     3.\n")
     while control == True:
         try:
             dif = int(input(green + "Selecciona la dificultad con 1, 2 o 3: "))
@@ -56,7 +57,7 @@ def dif():
 
 #Def para generar la combinacion secreta. Elije entre las letras de la tabla
 def generar_combinacion():
-    letras_posibles = ['A', 'B', 'C', 'D', 'E', 'F']
+    letras_posibles = ["A", "B", "C", "D", "E", "F"]
     combinacion = []
     for _ in range(4):
         letra = random.choice(letras_posibles)
@@ -84,18 +85,18 @@ def jugar_mastermind(difi):
         #Si la variable colocacion_correcta tiene las 4 letras correctas ganas
         if colocacion_correcta == 4:
             print(magenta+ " __      __  _____    _____   _______    ____    _____    _____            \n"
-                           " \ \    / / |_   _|  / ____| |__   __|  / __ \  |  __ \  |_   _|     /\    \n"
-                           "  \ \  / /    | |   | |         | |    | |  | | | |__) |   | |      /  \   \n"
-                           "   \ \/ /     | |   | |         | |    | |  | | |  _  /    | |     / /\ \  \n"
-                           "    \  /     _| |_  | |____     | |    | |__| | | | \ \   _| |_   / ____ \ \n"
-                           "     \/     |_____|  \_____|    |_|     \____/  |_|  \_\ |_____| /_/    \_\  ")
+                           r" \ \    / / |_   _|  / ____| |__   __|  / __ \  |  __ \  |_   _|     /\    ""\n"
+                           r"  \ \  / /    | |   | |         | |    | |  | | | |__) |   | |      /  \   ""\n"
+                           r"   \ \/ /     | |   | |         | |    | |  | | |  _  /    | |     / /\ \  ""\n"
+                           r"    \  /     _| |_  | |____     | |    | |__| | | | \ \   _| |_   / ____ \ ""\n"
+                           r"     \/     |_____|  \_____|    |_|     \____/  |_|  \_\ |_____| /_/    \_\  ")
             return
     print(red + "  _____    ______   _____    _____     ____    _______            \n"
-                " |  __ \  |  ____| |  __ \  |  __ \   / __ \  |__   __|     /\    \n"
-                " | |  | | | |__    | |__) | | |__) | | |  | |    | |       /  \   \n"
-                " | |  | | |  __|   |  _  /  |  _  /  | |  | |    | |      / /\ \  \n"
-                " | |__| | | |____  | | \ \  | | \ \  | |__| |    | |     / ____ \ \n"
-                " |_____/  |______| |_|  \_\ |_|  \_\  \____/     |_|    /_/    \_\ ")
+                r" |  __ \  |  ____| |  __ \  |  __ \   / __ \  |__   __|     /\    ""\n"
+                r" | |  | | | |__    | |__) | | |__) | | |  | |    | |       /  \   ""\n"
+                r" | |  | | |  __|   |  _  /  |  _  /  | |  | |    | |      / /\ \  ""\n"
+                r" | |__| | | |____  | | \ \  | | \ \  | |__| |    | |     / ____ \ ""\n"
+                r" |_____/  |______| |_|  \_\ |_|  \_\  \____/     |_|    /_/    \_\ ")
     print(red + f"La combinachión era {combinacion_secreta}")
 #Def para imprimir resulados si son correctos o no usa & o @
 def imprimir_resultado(colocacion_correcta, letra_correcta):
@@ -143,26 +144,26 @@ dificultad = dif()
 #Tambien muestra que dificultad has introducido
 if dificultad == 1:
     print(green + "Has seleccionado la dificutlad:\n"
-                  ".----.  .--.   .----..-.  .-. \n"
-                  "} |__} / {} \ { {__-` \ \/ / \n"
-                  "} '__}/  /\  \.-._} }  `-\ } \n"
-                  "`----'`-'  `-'`----'     `-' \n"
+                  r".----.  .--.   .----. .-.  .-. ""\n"
+                  r"} |__} / {} \ { {__-`  \ \/ / ""\n"
+                  r"} '__}/  /\  \.-._} } `-\ } ""\n"
+                  r"`----'`-'  `-'`----'    `-' ""\n"
                   "Tienes 20 intentos para descubrir la convinación.")
     difi = 20
 if dificultad == 2:
     print(magenta + "Has seleccionado la dificultad:\n"
-                    ".-. .-. .---. .---. .-.  .-.  .--.  .-.   \n"
-                    "|  \{ |/ {-. \} }}_}}  \/  { / {} \ } |   \n"
-                    "| }\  {\ '-} /| } \ | {  } |/  /\  \} '--. \n"
-                    "`-' `-' `---' `-'-' `-'  `-'`-'  `-'`----' \n"
+                    r".-. .-. .---. .---. .-.  .-.  .--.  .-.   ""\n"
+                    r"|  \{ |/ {-. \} }}_}}  \/  { / {} \ } |   ""\n"
+                    r"| }\  {\ '-} /| } \ | {  } |/  /\  \} '--. ""\n"
+                    r"`-' `-' `---' `-'-' `-'  `-'`-'  `-'`----' ""\n"
                     "Tienes 12 intentos para descubrir la convinación.")
     difi = 12
 if dificultad == 3:
     print(red + "Has seleccionado la dificultad:\n"
-                ".-. .-.  .--.  .---. .----. \n"
-                "{ {_} | / {} \ } }}_}} {-. \ \n"
-                "| { } }/  /\  \| } \ } '-} / \n"
-                "`-' `-'`-'  `-'`-'-' `----' \n"
+                r".-. .-.  .--.  .---. .----. ""\n"
+                r"{ {_} | / {} \ } }}_}} {-. \ ""\n"
+                r"| { } }/  /\  \| } \ } '-} / ""\n"
+                r"`-' `-'`-'  `-'`-'-' `----' ""\n"
                 "Tienes 7 intentos para descubrir la convinación.")
     difi = 7
 
