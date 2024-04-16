@@ -1,6 +1,7 @@
 #Importamos la libreria random
 import  random
-from getpass import getpass
+import os
+
 
 
 #Colores
@@ -115,7 +116,7 @@ def verificar_combinacion(combinacion_secreta, intento):
     return colocacion_correcta, letra_correcta
 #Este def es para introducir los intentos para adivinadlo. Tiene control de errores y aunque lo introduzcas en minuscula la funcion .upper() las traduce automaticamente.
 def obtener_intentos():
-    print(green + f"Intenta adivinar la combinación de las letras A, B, C, D, E, F: ")
+    print(green + f"Intenta adivinar la combinación de las letras A, B, C, D, E, F: Ejemplo: ABCD")
     while True:
         intento = input().upper()
         #Control de errores
@@ -127,13 +128,17 @@ def obtener_intentos():
 #Este def es para cuando se selecciona 2 jugadores. La combinacion secreta no se genera. Se introduce por el segundo jugador.
 #Esto hay que mejorarlo porque el input es visible
 def jugador2():
-    print(magenta + "Introduce la combinación secreta de 4 letras de la A a F: ")
+    blanco = 0
+    print(magenta + "Introduce la combinación secreta de 4 letras de la A a F: Ejemplo: ABCD")
     #Control de errores
     while True:
         combinacion = input().upper()
         if len(combinacion) != 4 or not all(letra in 'ABCDEF' for letra in combinacion):
             print(red + "Por favor, ingresa una combinación válida de 4 letras de A a F.")
         else:
+            while blanco != 20:
+                print(" \n")
+                blanco = blanco + 1
             return list(combinacion)
 
 
