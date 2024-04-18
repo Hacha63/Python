@@ -88,8 +88,8 @@ def jugar_mastermind(difi):
         colocacion_correcta, letra_correcta = verificar_combinacion(combinacion_secreta, intento)
 
         resultado = "@" * colocacion_correcta + "&" * letra_correcta
+        print(magenta + f"Intento {intento_actual}  |  {tablero}  |  {resultado}  |  Quedan {quedan} intentos.")
 
-        #Mostrar intentos
         mostrat_intentos(intento_actual, tablero, resultado, quedan)
 
         #Si la variable colocacion_correcta tiene las 4 letras correctas ganas
@@ -110,6 +110,8 @@ def jugar_mastermind(difi):
     print(red + f"La combinachión era {combinacion_secreta}")
 def mostrat_intentos(intento_actual, tablero, resultado, quedan):
     print(magenta + f"Intento {intento_actual}  |  {tablero}  |  {resultado}  |  Quedan {quedan} intentos.")
+    lista = [f"Intento {intento_actual}",f"  {tablero}"  ,f"|  {resultado}  |  ",f"Quedan{quedan}"]
+    print(f"{lista}")
 
 #Def para imprimir resulados si son correctos o no usa & o @
 def imprimir_resultado(colocacion_correcta, letra_correcta):
