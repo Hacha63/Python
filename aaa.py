@@ -90,7 +90,6 @@ def jugar_mastermind(difi):
         resultado = "@" * colocacion_correcta + "&" * letra_correcta
         print(magenta + f"Intento {intento_actual}  |  {tablero}  |  {resultado}  |  Quedan {quedan} intentos.")
 
-        mostrat_intentos(intento_actual, tablero, resultado, quedan)
 
         #Si la variable colocacion_correcta tiene las 4 letras correctas ganas
         if colocacion_correcta == 4:
@@ -108,10 +107,7 @@ def jugar_mastermind(difi):
                 r" | |__| | | |____  | | \ \  | | \ \  | |__| |    | |     / ____ \ ""\n"
                 r" |_____/  |______| |_|  \_\ |_|  \_\  \____/     |_|    /_/    \_\ ")
     print(red + f"La combinachión era {combinacion_secreta}")
-def mostrat_intentos(intento_actual, tablero, resultado, quedan):
-    print(magenta + f"Intento {intento_actual}  |  {tablero}  |  {resultado}  |  Quedan {quedan} intentos.")
-    lista = [f"Intento {intento_actual}",f"  {tablero}"  ,f"|  {resultado}  |  ",f"Quedan{quedan}"]
-    print(f"{lista}")
+
 
 #Def para imprimir resulados si son correctos o no usa & o @
 def imprimir_resultado(colocacion_correcta, letra_correcta):
@@ -139,7 +135,7 @@ def obtener_intentos():
             #Devolvemos el input como lista para compararlo después
             return list(intento)
 #Este def es para cuando se selecciona 2 jugadores. La combinacion secreta no se genera. Se introduce por el segundo jugador.
-#Esto hay que mejorarlo porque el input es visible
+
 def jugador2():
     blanco = 0
     print(magenta + "Introduce la combinación secreta de 4 letras de la A a F: Ejemplo: ABCD")
