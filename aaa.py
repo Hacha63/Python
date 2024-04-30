@@ -65,8 +65,41 @@ def generar_combinacion():
         combinacion.append(letra)
 
     return combinacion
-#Def con el juego como alm (difi) porque se usa la variable dificultad para que cada dificutlad tena sus intentos
+#Def para mostrar el tablero
+def mostrar(taula,fila,difi):
+    fila=0
+    #Colores
+    green = "\033[0;92m"
+    magenta = "\033[0;95m"
+    print(green + f"Intenta adivinar la combinación de las letras A, B, C, D, E, F: Ejemplo: ABCD")
+    #Mostrar tabla entendible
+    while fila < difi:
+        print(magenta + f"{taula[fila]}")
+        fila+=1
 def jugar_mastermind(difi):
+    #Tabla donde guardaremos las jugadas
+    taula = [[0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0],
+             [0, 0, 0, 0]]
+    fila = 0
     quedan = difi
     print(magenta + "¡Bienvenido a Mastermind!\n")
     #Llama el def para elejir los jugadores y compara el resultado, si la eleccion no es 1, (2) nos lleva a otro def donde la combinación se elije
@@ -75,31 +108,41 @@ def jugar_mastermind(difi):
     else:
         combinacion_secreta = jugador2()
 
-    #Explicacion
+    #Explicacion del juego
     print(green + f"Intenta adivinar la combinación de las letras A, B, C, D, E, F: Ejemplo: ABCD")
     #Los intentos tienen el rango entre 1 y la dificultad ya sean 7, 12 o 20 intentos.
     for intento_actual in range(1, difi):
-        quedan = quedan - 1
+        while fila < difi:
+            columna = 0
+            while columna < 4:
+                intento = obtener_intentos()
+                colocacion_correcta, letra_correcta = verificar_combinacion(combinacion_secreta,intento)
+                resultado = "@" * colocacion_correcta + "&" * letra_correcta
+                taula[fila][columna] = intento
+                columna += 1
+                taula[fila][columna] = intento_actual
+                columna += 1
+                taula[fila][columna] = resultado
+                columna += 1
+                quedan = quedan - 1
+                taula[fila][columna] = quedan
+                #Mostrar tablero
+                mostrar(taula, fila, difi)
+                columna += 1
+                if colocacion_correcta == 4:
+                    print(green + " __      __  _____    _____   _______    ____    _____    _____            \n"
+                                  r" \ \    / / |_   _|  / ____| |__   __|  / __ \  |  __ \  |_   _|     /\    ""\n"
+                                  r"  \ \  / /    | |   | |         | |    | |  | | | |__) |   | |      /  \   ""\n"
+                                  r"   \ \/ /     | |   | |         | |    | |  | | |  _  /    | |     / /\ \  ""\n"
+                                  r"    \  /     _| |_  | |____     | |    | |__| | | | \ \   _| |_   / ____ \ ""\n"
+                                  r"     \/     |_____|  \_____|    |_|     \____/  |_|  \_\ |_____| /_/    \_\  ")
+                    return
+            fila += 1
 
-        intento = obtener_intentos()
-        tablero = [intento]
-
-        #Variables de siguientes def para comparar la combinacion
-        colocacion_correcta, letra_correcta = verificar_combinacion(combinacion_secreta, intento)
-
-        resultado = "@" * colocacion_correcta + "&" * letra_correcta
-        print(magenta + f"Intento {intento_actual}  |  {tablero}  |  {resultado}  |  Quedan {quedan} intentos.")
 
 
         #Si la variable colocacion_correcta tiene las 4 letras correctas ganas
-        if colocacion_correcta == 4:
-            print(green + " __      __  _____    _____   _______    ____    _____    _____            \n"
-                           r" \ \    / / |_   _|  / ____| |__   __|  / __ \  |  __ \  |_   _|     /\    ""\n"
-                           r"  \ \  / /    | |   | |         | |    | |  | | | |__) |   | |      /  \   ""\n"
-                           r"   \ \/ /     | |   | |         | |    | |  | | |  _  /    | |     / /\ \  ""\n"
-                           r"    \  /     _| |_  | |____     | |    | |__| | | | \ \   _| |_   / ____ \ ""\n"
-                           r"     \/     |_____|  \_____|    |_|     \____/  |_|  \_\ |_____| /_/    \_\  ")
-            return
+
     print(red + "  _____    ______   _____    _____     ____    _______            \n"
                 r" |  __ \  |  ____| |  __ \  |  __ \   / __ \  |__   __|     /\    ""\n"
                 r" | |  | | | |__    | |__) | | |__) | | |  | |    | |       /  \   ""\n"
@@ -108,11 +151,8 @@ def jugar_mastermind(difi):
                 r" |_____/  |______| |_|  \_\ |_|  \_\  \____/     |_|    /_/    \_\ ")
     print(red + f"La combinachión era {combinacion_secreta}")
 
-
 #Def para imprimir resulados si son correctos o no usa & o @
-def imprimir_resultado(colocacion_correcta, letra_correcta):
-    resultado = "@" * colocacion_correcta + "&" * letra_correcta
-    print(green + f"Resultado: {resultado}")
+
 #Compara la combinacion del intento que hemos introducido con la combinación que ha generado de la tabla en el def anterior
 def verificar_combinacion(combinacion_secreta, intento):
     colocacion_correcta = 0
@@ -135,7 +175,7 @@ def obtener_intentos():
             #Devolvemos el input como lista para compararlo después
             return list(intento)
 #Este def es para cuando se selecciona 2 jugadores. La combinacion secreta no se genera. Se introduce por el segundo jugador.
-
+#Esto hay que mejorarlo porque el input es visible
 def jugador2():
     blanco = 0
     print(magenta + "Introduce la combinación secreta de 4 letras de la A a F: Ejemplo: ABCD")
