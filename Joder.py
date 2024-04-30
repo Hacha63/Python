@@ -105,6 +105,10 @@ def jugar_mastermind(difi):
     #Llama el def para elejir los jugadores y compara el resultado, si la eleccion no es 1, (2) nos lleva a otro def donde la combinación se elije
     if jugadores() == 1:
         combinacion_secreta = generar_combinacion()
+        #Ver combinacion aleatoria
+        dev = input("Dev Mode? (YES or NO): ").upper()
+        if dev == "YES":
+            print (combinacion_secreta)
     else:
         combinacion_secreta = jugador2()
 
