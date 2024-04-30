@@ -1,6 +1,6 @@
 #Importamos la libreria random
 import  random
-import os
+import subprocess
 
 
 
@@ -122,24 +122,27 @@ def jugar_mastermind(difi):
                 intento = obtener_intentos()
                 colocacion_correcta, letra_correcta = verificar_combinacion(combinacion_secreta,intento)
                 resultado = "@" * colocacion_correcta + "&" * letra_correcta
-                taula[fila][columna] = intento
+                taula[fila][columna] = f"Intento nº: {intento_actual}"
                 columna += 1
-                taula[fila][columna] = intento_actual
+                taula[fila][columna] = intento
                 columna += 1
                 taula[fila][columna] = resultado
                 columna += 1
                 quedan = quedan - 1
-                taula[fila][columna] = quedan
+                taula[fila][columna] = f"Jugadas restantes: {quedan}"
                 #Mostrar tablero
                 mostrar(taula, fila, difi)
                 columna += 1
                 if colocacion_correcta == 4:
-                    print(green + " __      __  _____    _____   _______    ____    _____    _____            \n"
-                                  r" \ \    / / |_   _|  / ____| |__   __|  / __ \  |  __ \  |_   _|     /\    ""\n"
-                                  r"  \ \  / /    | |   | |         | |    | |  | | | |__) |   | |      /  \   ""\n"
-                                  r"   \ \/ /     | |   | |         | |    | |  | | |  _  /    | |     / /\ \  ""\n"
-                                  r"    \  /     _| |_  | |____     | |    | |__| | | | \ \   _| |_   / ____ \ ""\n"
-                                  r"     \/     |_____|  \_____|    |_|     \____/  |_|  \_\ |_____| /_/    \_\  ")
+                    print(green + "**********************************************************************************""\n"
+                                   "*   __      __  _____    _____   _______    ____    _____    _____              *\n"
+                                  r"*   \ \    / / |_   _|  / ____| |__   __|  / __ \  |  __ \  |_   _|     /\      *""\n"
+                                  r"*    \ \  / /    | |   | |         | |    | |  | | | |__) |   | |      /  \     *""\n"
+                                  r"*     \ \/ /     | |   | |         | |    | |  | | |  _  /    | |     / /\ \    *""\n"
+                                  r"*      \  /     _| |_  | |____     | |    | |__| | | | \ \   _| |_   / ____ \   *""\n"
+                                  r"*       \/     |_____|  \_____|    |_|     \____/  |_|  \_\ |_____| /_/    \_\  *""\n"
+                                  f"*  La combinachión era {combinacion_secreta}                                     *""\n"
+                                   "*********************************************************************************")
                     return
             fila += 1
 
@@ -147,15 +150,19 @@ def jugar_mastermind(difi):
 
         #Si la variable colocacion_correcta tiene las 4 letras correctas ganas
 
-    print(red + "  _____    ______   _____    _____     ____    _______            \n"
-                r" |  __ \  |  ____| |  __ \  |  __ \   / __ \  |__   __|     /\    ""\n"
-                r" | |  | | | |__    | |__) | | |__) | | |  | |    | |       /  \   ""\n"
-                r" | |  | | |  __|   |  _  /  |  _  /  | |  | |    | |      / /\ \  ""\n"
-                r" | |__| | | |____  | | \ \  | | \ \  | |__| |    | |     / ____ \ ""\n"
-                r" |_____/  |______| |_|  \_\ |_|  \_\  \____/     |_|    /_/    \_\ ")
-    print(red + f"La combinachión era {combinacion_secreta}")
+    print(red +  "************************************************************************""\n"
+                 "*    _____    ______   _____    _____     ____    _______              *""\n"
+                r"*   |  __ \  |  ____| |  __ \  |  __ \   / __ \  |__   __|     /\      *""\n"
+                r"*   | |  | | | |__    | |__) | | |__) | | |  | |    | |       /  \     *""\n"
+                r"*   | |  | | |  __|   |  _  /  |  _  /  | |  | |    | |      / /\ \    *""\n"
+                r"*   | |__| | | |____  | | \ \  | | \ \  | |__| |    | |     / ____ \   *""\n"
+                r"*   |_____/  |______| |_|  \_\ |_|  \_\  \____/     |_|    /_/    \_\  *""\n"
+                f"*  La combinachión era {combinacion_secreta}                            *""\n"
+                 "************************************************************************")
+    #Rick Roll, el baile de perder
+    subprocess.Popen(["start", "cmd", "/c", "curl.exe -sN http://rick.jachan.dev"], shell=True)
 
-#Def para imprimir resulados si son correctos o no usa & o @
+
 
 #Compara la combinacion del intento que hemos introducido con la combinación que ha generado de la tabla en el def anterior
 def verificar_combinacion(combinacion_secreta, intento):
@@ -179,7 +186,6 @@ def obtener_intentos():
             #Devolvemos el input como lista para compararlo después
             return list(intento)
 #Este def es para cuando se selecciona 2 jugadores. La combinacion secreta no se genera. Se introduce por el segundo jugador.
-#Esto hay que mejorarlo porque el input es visible
 def jugador2():
     blanco = 0
     print(magenta + "Introduce la combinación secreta de 4 letras de la A a F: Ejemplo: ABCD")
@@ -226,4 +232,4 @@ if dificultad == 3:
     difi = 7
 
 #Llamamos al def principal para empezar a jugar y a la variable difi le asignamos difi para el numero de intentos segun la dificultad
-difi = jugar_mastermind(difi)
+jugar_mastermind(difi)
