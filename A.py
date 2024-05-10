@@ -66,14 +66,14 @@ def generar_combinacion():
 
     return combinacion
 #Def para mostrar el tablero
-def mostrar(taula,fila,difi,intento_actual):
+def mostrar(taula,fila,difi,tab_max):
     fila=0
     #Colores
     green = "\033[0;92m"
     magenta = "\033[0;95m"
     print(green + f"Intenta adivinar la combinación de las letras A, B, C, D, E, F: Ejemplo: ABCD")
     #Mostrar tabla entendible
-    while fila < intento_actual:
+    while fila < tab_max:
         print(magenta + f"{taula[fila]}")
         fila+=1
 def jugar_mastermind(difi):
@@ -123,6 +123,7 @@ def jugar_mastermind(difi):
                 colocacion_correcta, letra_correcta = verificar_combinacion(combinacion_secreta,intento)
                 resultado = "@" * colocacion_correcta + "&" * letra_correcta
                 taula[fila][columna] = f"Intento nº: {intento_actual}"
+                tab_max = intento_actual
                 intento_actual = intento_actual + 1
                 columna += 1
                 taula[fila][columna] = intento
@@ -132,7 +133,7 @@ def jugar_mastermind(difi):
                 quedan = quedan - 1
                 taula[fila][columna] = f"Jugadas restantes: {quedan}"
                 #Mostrar tablero
-                mostrar(taula, fila, difi, intento_actual)
+                mostrar(taula, fila, difi, tab_max)
                 columna += 1
                 if colocacion_correcta == 4:
                     print(green + "**********************************************************************************""\n"
