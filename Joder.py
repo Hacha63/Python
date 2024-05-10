@@ -123,6 +123,7 @@ def jugar_mastermind(difi):
                 colocacion_correcta, letra_correcta = verificar_combinacion(combinacion_secreta,intento)
                 resultado = "@" * colocacion_correcta + "&" * letra_correcta
                 taula[fila][columna] = f"Intento nº: {intento_actual}"
+                intento_actual = intento_actual + 1
                 columna += 1
                 taula[fila][columna] = intento
                 columna += 1
