@@ -171,13 +171,15 @@ def jugar_mastermind(difi):
 def verificar_combinacion(combinacion_secreta, intento):
     colocacion_correcta = 0
     letra_correcta = 0
+    #Hago una copia del la combinacion secreta y del intento
     combinacion_secreta_copy = combinacion_secreta.copy()
     intento_copia = intento.copy()
     #Primero verificamos las letras bien puestas
     for i in range(4):
         if intento_copia[i] == combinacion_secreta[i]:
             colocacion_correcta += 1
-            #Marcamos la letra como encontrada para no contarla dos veces
+            #Marco la posicion de [i] de la combinacion como None, para que no me la lea otra vez en el siguiente for
+            #Cambio la posicion [i] de la copia del intento y la aplaso por una X para que no me la encuentre otra vez por error
             combinacion_secreta_copy[i] = None
             intento_copia[i] = "X"
     #Luego verificamos las letras correctas pero en posiciones incorrectas
