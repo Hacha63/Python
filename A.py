@@ -172,16 +172,16 @@ def verificar_combinacion(combinacion_secreta, intento):
     colocacion_correcta = 0
     letra_correcta = 0
     combinacion_secreta_copy = combinacion_secreta.copy()
-
+    intento_copia = intento.copy()
     #Primero verificamos las letras bien puestas
     for i in range(4):
-        if intento[i] == combinacion_secreta[i]:
+        if intento_copia[i] == combinacion_secreta[i]:
             colocacion_correcta += 1
             #Marcamos la letra como encontrada para no contarla dos veces
             combinacion_secreta_copy[i] = None
-
+            intento_copia[i] = "X"
     #Luego verificamos las letras correctas pero en posiciones incorrectas
-    for letra in intento:
+    for letra in intento_copia:
         if letra in combinacion_secreta_copy and letra != None:
             letra_correcta += 1
             #Marcamos la letra como encontrada para no contarla dos veces
