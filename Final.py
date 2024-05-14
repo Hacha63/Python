@@ -76,6 +76,7 @@ def mostrar(taula,fila,difi,tab_max):
     while fila < tab_max:
         print(magenta + f"{taula[fila]}")
         fila+=1
+#Def principal para la iniciación del juego
 def jugar_mastermind(difi):
     #Tabla donde guardaremos las jugadas
     taula = [[0, 0, 0, 0],
@@ -106,9 +107,7 @@ def jugar_mastermind(difi):
     if jugadores() == 1:
         combinacion_secreta = generar_combinacion()
         #Ver combinacion aleatoria
-        dev = input("Dev Mode? (YES or NO): ").upper()
-        if dev == "YES":
-            print (combinacion_secreta)
+
     else:
         combinacion_secreta = jugador2()
 
@@ -116,22 +115,29 @@ def jugar_mastermind(difi):
     print(green + f"Intenta adivinar la combinación de las letras A, B, C, D, E, F: Ejemplo: ABCD")
     #Los intentos tienen el rango entre 1 y la dificultad ya sean 7, 12 o 20 intentos.
     for intento_actual in range(1, difi):
+    #2 While para ir rellenando las filas y columnas con los datos necesarios
         while fila < difi:
             columna = 0
             while columna < 4:
                 blanco = 0
                 intento = obtener_intentos()
-                colocacion_correcta, letra_correcta = verificar_combinacion(combinacion_secreta,intento)
+                #Multiplica la variable colocacion corrcta y letra correcta para ver cuantos @ y & hay
+                colocacion_correcta, letra_correcta, trampa = verificar_combinacion(combinacion_secreta,intento)
                 resultado = "@" * colocacion_correcta + "&" * letra_correcta
+                #Rellena el numero de intento
                 taula[fila][columna] = f"Intento nº: {intento_actual}"
+                #Esta variable tab_max es para que la tabla se muestre hasta el limite de intento
                 tab_max = intento_actual
                 intento_actual = intento_actual + 1
                 columna += 1
+                #Mostrar input
                 taula[fila][columna] = intento
                 columna += 1
+                #Mostrar resultado
                 taula[fila][columna] = resultado
                 columna += 1
                 quedan = quedan - 1
+                #Mostrar jugadas restantes
                 taula[fila][columna] = f"Jugadas restantes: {quedan}"
                 #Espacio entre tabla
                 while blanco != 20:
@@ -139,9 +145,12 @@ def jugar_mastermind(difi):
                     blanco = blanco + 1
                 #Mostrar tablero
                 mostrar(taula, fila, difi, tab_max)
+                #Mostrar codigo secreto si se introduce ###
+                if trampa > 0:
+                    print(combinacion_secreta)
                 columna += 1
 
-
+                #Ascii de victoria si las 4 letras son correctas
                 if colocacion_correcta == 4:
                     print(green + "**********************************************************************************""\n"
                                    "*   __      __  _____    _____   _______    ____    _____    _____              *\n"
@@ -157,7 +166,7 @@ def jugar_mastermind(difi):
 
 
 
-        #Si la variable colocacion_correcta tiene las 4 letras correctas ganas
+        #Si se te acaban los intentos pierdes
 
     print(red +  "************************************************************************""\n"
                  "*    _____    ______   _____    _____     ____    _______              *""\n"
@@ -178,9 +187,15 @@ def jugar_mastermind(difi):
 def verificar_combinacion(combinacion_secreta, intento):
     colocacion_correcta = 0
     letra_correcta = 0
+    #variable para las trampas
+    trampa = 0
     #Hago una copia del la combinacion secreta y del intento
     combinacion_secreta_copy = combinacion_secreta.copy()
     intento_copia = intento.copy()
+    #Si en el input hay # se suma la variable trampa y se mostrará el codigo secreto
+    for i in range(4):
+        if intento_copia[i] == "#":
+            trampa = trampa + 1
     #Primero verificamos las letras bien puestas
     for i in range(4):
         if intento_copia[i] == combinacion_secreta[i]:
@@ -196,15 +211,15 @@ def verificar_combinacion(combinacion_secreta, intento):
             #Marcamos la letra como encontrada para no contarla dos veces
             combinacion_secreta_copy.remove(letra)
 
-    return colocacion_correcta, letra_correcta
+    return colocacion_correcta, letra_correcta, trampa
 
 
 #Este def es para introducir los intentos para adivinadlo. Tiene control de errores y aunque lo introduzcas en minuscula la funcion .upper() las traduce automaticamente.
 def obtener_intentos():
     while True:
         intento = input().upper()
-        #Control de errores
-        if len(intento) != 4 or not all(letra in 'ABCDEF' for letra in intento):
+        #Control de errores, en el listado de caracteres permitidos he añadido # para que se puedan hacer trampas
+        if len(intento) != 4 or not all(letra in 'ABCDEF#' for letra in intento):
             print(red + "Por favor, ingresa una combinación válida de 4 letras de A a F.")
         else:
             #Devolvemos el input como lista para compararlo después
@@ -219,6 +234,7 @@ def jugador2():
         if len(combinacion) != 4 or not all(letra in 'ABCDEF' for letra in combinacion):
             print(red + "Por favor, ingresa una combinación válida de 4 letras de A a F.")
         else:
+            #Espacio para no ver el codigo del compañero
             while blanco != 20:
                 print(" \n")
                 blanco = blanco + 1
